@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abin Kuriakose - Web Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            perspective: 800px;
+        }
+        
+        .connection-line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+            animation: flowConnection 8s infinite linear;
+        }
+        
+        @keyframes flowConnection {
+            0% { transform: translateX(-100%); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateX(100vw); opacity: 0; }
+        }
+        
+        .node {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #3b82f6;
+            border-radius: 50%;
+            box-shadow: 0 0 24px 4px #3b82f6, 0 0 0 2px #1e40af;
+            animation: pulse 2s infinite ease-in-out, parallaxMove 10s infinite linear alternate;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5); }
+        }
+        
+        @keyframes parallaxMove {
+            0% {
+                transform: translateZ(0px) scale(1);
+            }
+            50% {
+                transform: translateZ(80px) scale(1.2);
+            }
+            100% {
+                transform: translateZ(0px) scale(1);
+            }
+        }
+        
+        .floating-card {
+            transition: all 0.3s ease;
+        }
+        
+        .floating-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
+        }
+        
+        .skill-tag {
+            background: linear-gradient(135deg, #1a1a1a, #262626);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .skill-tag:hover {
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            transform: scale(1.05);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            background: #3b82f6;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 2rem;
+            width: 2px;
+            height: calc(100% - 1rem);
+            background: linear-gradient(to bottom, #3b82f6, transparent);
+        }
+        
+        .timeline-item:last-child::after {
+            display: none;
+        }
+        
+        .form-input {
+            background: rgba(26, 26, 26, 0.8);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+        
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-3px);
+            color: #3b82f6;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #3b82f6;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .typing-effect {
+            border-right: 2px solid #3b82f6;
+            animation: typing 3s steps(40, end), blink 1s infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        @keyframes blink {
+            0%, 50% { border-color: transparent; }
+            51%, 100% { border-color: #3b82f6; }
+        }
+        
+        /* 3D Rotating Shape */
+        .bg-3d-shape {
+            position: absolute;
+            top: 20%;
+            left: 60%;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle at 30% 30%, #8b5cf6 60%, transparent 100%);
+            border-radius: 50%;
+            filter: blur(16px);
+            opacity: 0.5;
+            transform-style: preserve-3d;
+            animation: rotate3dShape 18s linear infinite;
+            z-index: -2;
+        }
+        
+        @keyframes rotate3dShape {
+            0% {
+                transform: rotateX(0deg) rotateY(0deg) scale(1);
+            }
+            100% {
+                transform: rotateX(360deg) rotateY(360deg) scale(1.1);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="connection-line" style="top: 10%; height: 1px; animation-delay: 0s;"></div>
+        <div class="connection-line" style="top: 30%; height: 1px; animation-delay: 2s;"></div>
+        <div class="connection-line" style="top: 50%; height: 1px; animation-delay: 4s;"></div>
+        <div class="connection-line" style="top: 70%; height: 1px; animation-delay: 6s;"></div>
+        <div class="connection-line" style="top: 90%; height: 1px; animation-delay: 8s;"></div>
+        
+        <div class="node" style="top: 15%; left: 10%; animation-delay: 0s;"></div>
+        <div class="node" style="top: 25%; left: 80%; animation-delay: 1s;"></div>
+        <div class="node" style="top: 45%; left: 20%; animation-delay: 2s;"></div>
+        <div class="node" style="top: 65%; left: 70%; animation-delay: 3s;"></div>
+        <div class="node" style="top: 85%; left: 40%; animation-delay: 4s;"></div>
+        <div class="node" style="top: 35%; left: 60%; animation-delay: 5s;"></div>
+        <div class="bg-3d-shape"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-900/80 backdrop-blur-md border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="text-2xl font-bold gradient-text">Portfolio</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="nav-link text-gray-300 hover:text-white">Home</a>
+                    <a href="#about" class="nav-link text-gray-300 hover:text-white">About</a>
+                    <a href="#projects" class="nav-link text-gray-300 hover:text-white">Projects</a>
+                    <a href="#contact" class="nav-link text-gray-300 hover:text-white">Contact</a>
+                </div>
+                <button class="md:hidden text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="w-48 h-48 mx-auto mb-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 p-1">
+                <div class="w-full h-full rounded-full bg-gray-800 flex items-center justify-center">
+                    <div class="w-32 h-32 bg-gray-700 rounded-full flex items-center justify-center overflow-hidden">
+                        <img src="ABINimg.jpg" alt="Abin Kuriakose" class="w-full h-full object-cover rounded-full" />
+                    </div>
+                </div>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-bold mb-4">
+                <span class="gradient-text">Abin</span> Kuriakose
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-300 mb-6">Web Developer</p>
+            <p class="text-lg text-gray-400 mb-8 max-w-2xl mx-auto">
+                Crafting digital experiences with clean code and innovative solutions
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+                <a href="abin resume.pdf" download class="btn-primary text-white px-8 py-3 rounded-full font-semibold inline-block">
+                    Download Resume
+                </a>
+                <a href="#contact" class="border-2 border-blue-500 text-blue-500 px-8 py-3 rounded-full font-semibold hover:bg-blue-500 hover:text-white transition-all duration-300">
+                    Get In Touch
+                </a>
+            </div>
+            
+            <div class="flex justify-center space-x-6">
+                <a href="https://www.linkedin.com/in/abin-kuriakose-027040322" target="_blank" class="social-icon text-gray-400 hover:text-blue-500 text-2xl">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                </a>
+                <a href="https://github.com/Programeer12" target="_blank" class="social-icon text-gray-400 hover:text-blue-500 text-2xl">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                </a>
+                <a href="https://www.instagram.com/_abin___kuriakose__/profilecard/?igsh=MWwxdjhkem5uMnN4bQ==" target="_blank" class="social-icon text-gray-400 hover:text-blue-500 text-2xl">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-4">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 gradient-text">About Me</h2>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <p class="text-lg text-gray-300 mb-6">
+                        I'm a passionate web developer with a keen eye for detail and a love for creating 
+                        engaging digital experiences. My journey in web development started with curiosity 
+                        and has evolved into a dedicated pursuit of crafting clean, efficient, and user-friendly applications.
+                    </p>
+                    <p class="text-lg text-gray-300 mb-8">
+                        I specialize in modern web technologies and enjoy working on both frontend and backend 
+                        development. My goal is to create solutions that not only look great but also provide 
+                        exceptional user experiences.
+                    </p>
+                    
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-semibold mb-4 text-blue-400">Skills</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="skill-tag px-4 py-2 rounded-full text-sm font-medium">HTML5</span>
+                            <span class="skill-tag px-4 py-2 rounded-full text-sm font-medium">CSS3</span>
+                            <span class="skill-tag px-4 py-2 rounded-full text-sm font-medium">JavaScript</span>
+                            <span class="skill-tag px-4 py-2 rounded-full text-sm font-medium">React</span>
+                            <span class="skill-tag px-4 py-2 rounded-full text-sm font-medium">Node.js</span>
+                            <span class="skill-tag px-4 py-2 rounded-full text-sm font-medium">Python</span>
+                            <span class="skill-tag px-4 py-2 rounded-full text-sm font-medium">Git</span>
+                            <span class="skill-tag px-4 py-2 rounded-full text-sm font-medium">MongoDB</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-2xl font-semibold mb-6 text-blue-400">Experience & Education</h3>
+                    <div class="space-y-8">
+                        <div class="timeline-item">
+                            <h4 class="text-lg font-semibold text-white mb-2">Self-Taught Developer</h4>
+                            <p class="text-blue-400 text-sm mb-2">2022 - Present</p>
+                            <p class="text-gray-300 text-sm">
+                                Continuously learning and improving web development skills through online courses, 
+                                tutorials, and hands-on projects.
+                            </p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="text-lg font-semibold text-white mb-2">Web Development Bootcamp</h4>
+                            <p class="text-blue-400 text-sm mb-2">2022</p>
+                            <p class="text-gray-300 text-sm">
+                                Completed intensive web development bootcamp covering full-stack development, 
+                                modern frameworks, and best practices.
+                            </p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="text-lg font-semibold text-white mb-2">Computer Science Student</h4>
+                            <p class="text-blue-400 text-sm mb-2">2020 - 2024</p>
+                            <p class="text-gray-300 text-sm">
+                                Pursuing Bachelor's degree in Computer Science with focus on software development 
+                                and web technologies.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 px-4 bg-gray-800/50">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 gradient-text">Projects</h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="floating-card bg-gray-800 rounded-lg p-6 border border-gray-700">
+                    <div class="h-48 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg mb-4 flex items-center justify-center">
+                        <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">E-Commerce Platform</h3>
+                    <p class="text-gray-300 mb-4">A full-stack e-commerce solution with user authentication, payment integration, and admin dashboard.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-blue-500/20 text-blue-400 px-2 py-1 rounded text-xs">React</span>
+                        <span class="bg-blue-500/20 text-blue-400 px-2 py-1 rounded text-xs">Node.js</span>
+                        <span class="bg-blue-500/20 text-blue-400 px-2 py-1 rounded text-xs">MongoDB</span>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-blue-400 hover:text-blue-300 transition-colors">Live Demo</a>
+                        <a href="#" class="text-blue-400 hover:text-blue-300 transition-colors">GitHub</a>
+                    </div>
+                </div>
+                
+                <div class="floating-card bg-gray-800 rounded-lg p-6 border border-gray-700">
+                    <div class="h-48 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-lg mb-4 flex items-center justify-center">
+                        <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 014-4h2a4 4 0 014 4v2"></path>
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Demographic Data Analyzer</h3>
+                    <p class="text-gray-300 mb-4">A data analysis tool for visualizing and interpreting demographic datasets, featuring interactive charts and exportable reports.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded text-xs">Python</span>
+                        <span class="bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded text-xs">Pandas</span>
+                        <span class="bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded text-xs">Plotly</span>
+                        <span class="bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded text-xs">Dash</span>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="https://github.com/Programeer12/Demographic-Data-Analyzer-.git" target="_blank" class="text-yellow-400 hover:text-yellow-300 transition-colors">GitHub</a>
+                    </div>
+                </div>
+                
+                <div class="floating-card bg-gray-800 rounded-lg p-6 border border-gray-700">
+                    <div class="h-48 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg mb-4 flex items-center justify-center">
+                        <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Weather Dashboard</h3>
+                    <p class="text-gray-300 mb-4">A responsive weather application with location-based forecasts, interactive charts, and weather alerts.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-purple-500/20 text-purple-400 px-2 py-1 rounded text-xs">JavaScript</span>
+                        <span class="bg-purple-500/20 text-purple-400 px-2 py-1 rounded text-xs">API</span>
+                        <span class="bg-purple-500/20 text-purple-400 px-2 py-1 rounded text-xs">Chart.js</span>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">Live Demo</a>
+                        <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-4">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 gradient-text">Get In Touch</h2>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-6 text-blue-400">Let's Connect</h3>
+                    <p class="text-lg text-gray-300 mb-8">
+                        I'm always open to discussing new opportunities, collaborating on projects, 
+                        or just having a chat about web development. Feel free to reach out!
+                    </p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-4">
+                            <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                            <span class="text-gray-300">abinkuriakose2852@gmail.com</span>
+                        </div>
+                        
+                        <div class="flex items-center space-x-4">
+                            <svg class="w-6 h-6 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                            <a href="https://www.linkedin.com/in/abin-kuriakose-027040322" target="_blank" class="text-gray-300 hover:text-blue-400 transition-colors">LinkedIn Profile</a>
+                        </div>
+                        
+                        <div class="flex items-center space-x-4">
+                            <svg class="w-6 h-6 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                            <a href="https://github.com/Programeer12" target="_blank" class="text-gray-300 hover:text-blue-400 transition-colors">GitHub Profile</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <form class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-300 mb-2">Name</label>
+                            <input type="text" id="name" name="name" class="form-input w-full px-4 py-3 rounded-lg text-white placeholder-gray-400 focus:outline-none" placeholder="Your name">
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+                            <input type="email" id="email" name="email" class="form-input w-full px-4 py-3 rounded-lg text-white placeholder-gray-400 focus:outline-none" placeholder="your.email@example.com">
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-300 mb-2">Message</label>
+                            <textarea id="message" name="message" rows="5" class="form-input w-full px-4 py-3 rounded-lg text-white placeholder-gray-400 focus:outline-none resize-none" placeholder="Your message..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary w-full py-3 rounded-lg font-semibold text-white">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700 py-8 px-4">
+        <div class="max-w-6xl mx-auto text-center">
+            <p class="text-gray-400">© 2024 Abin Kuriakose. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
